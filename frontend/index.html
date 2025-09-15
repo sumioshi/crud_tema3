@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Viagens - CRUD</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Prova CRUD - Gerenciamento de Viagens</h1>
+        </header>
+
+        <div class="tabs">
+            <button class="tab active" onclick="mostrarTab('destinos')">Destinos</button>
+            <button class="tab" onclick="mostrarTab('viagens')">Viagens</button>
+        </div>
+
+        <div id="destinos-tab" class="tab-content active">
+            <h2>Gerenciar Destinos</h2>
+            
+            <form id="destino-form">
+                <input type="hidden" id="destino-id">
+                <div class="form-group">
+                    <label for="destino-nome">Nome do Destino:</label>
+                    <input type="text" id="destino-nome" required>
+                </div>
+                <button type="submit" id="destino-submit">Adicionar Destino</button>
+                <button type="button" id="destino-cancel" onclick="cancelarEdicaoDestino()" style="display: none;">Cancelar</button>
+            </form>
+
+            <div class="lista">
+                <h3>Lista de Destinos</h3>
+                <div id="destinos-lista"></div>
+            </div>
+        </div>
+
+        <div id="viagens-tab" class="tab-content">
+            <h2>Gerenciar Viagens</h2>
+            
+            <form id="viagem-form">
+                <input type="hidden" id="viagem-id">
+                <div class="form-group">
+                    <label for="viagem-nome">Nome da Viagem:</label>
+                    <input type="text" id="viagem-nome" required>
+                </div>
+                <div class="form-group">
+                    <label for="viagem-data-saida">Data de Saída:</label>
+                    <input type="date" id="viagem-data-saida" required>
+                </div>
+                <div class="form-group">
+                    <label for="viagem-data-chegada">Data de Chegada:</label>
+                    <input type="date" id="viagem-data-chegada" required>
+                </div>
+                <div class="form-group">
+                    <label for="viagem-valor">Valor:</label>
+                    <input type="number" id="viagem-valor" step="0.01" required>
+                </div>
+                <div class="form-group">
+                    <label for="viagem-destinos">Destinos:</label>
+                    <select id="viagem-destinos" multiple></select>
+                </div>
+                <button type="submit" id="viagem-submit">Adicionar Viagem</button>
+                <button type="button" id="viagem-cancel" onclick="cancelarEdicaoViagem()" style="display: none;">Cancelar</button>
+            </form>
+
+            <div class="lista">
+                <h3>Lista de Viagens</h3>
+                <div id="viagens-lista"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="dist/main.js"></script>
+</body>
+</html>
