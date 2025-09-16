@@ -1,7 +1,6 @@
 const express = require('express');
 const cors = require('cors');
 const { 
-  initializeDatabase,
   getAllDestinos,
   createDestino,
   updateDestino,
@@ -17,12 +16,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Inicializar banco de dados
-initializeDatabase().then(() => {
-  console.log('Banco de dados inicializado');
-}).catch(err => {
-  console.error('Erro ao inicializar banco:', err);
-});
+console.log('Servidor rodando na porta 3000');
 
 app.get('/destinos', async (req, res) => {
   try {
