@@ -1,6 +1,6 @@
 const express = require('express');
 const cors = require('cors');
-const { 
+import { 
   getAllDestinos,
   createDestino,
   updateDestino,
@@ -9,7 +9,7 @@ const {
   createViagem,
   updateViagem,
   deleteViagem
-} = require('./database-sqlite');
+} from './database-sqlite';
 
 const app = express();
 const port: number = 3001;

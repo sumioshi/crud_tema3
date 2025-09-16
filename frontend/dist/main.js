@@ -1,4 +1,5 @@
 "use strict";
+// evitar problemas de portas sendo usadas no w11
 const API_URL = 'http://localhost:3001';
 let destinos = [];
 let viagens = [];
@@ -259,7 +260,7 @@ function cancelarEdicaoViagem() {
     document.getElementById('viagem-submit').textContent = 'Adicionar Viagem';
     document.getElementById('viagem-cancel').style.display = 'none';
 }
-// Colocar funções no window para usar no HTML
+// usando as funções no window para usar no html
 window.mostrarTab = mostrarTab;
 window.editarDestino = editarDestino;
 window.editarViagem = editarViagem;

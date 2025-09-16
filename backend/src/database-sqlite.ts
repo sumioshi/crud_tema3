@@ -171,7 +171,7 @@ function deleteViagem(id: number): Promise<any> {
   });
 }
 
-module.exports = {
+export {
   getAllDestinos,
   createDestino,
   updateDestino,
