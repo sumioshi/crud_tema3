@@ -4,7 +4,7 @@ const path = require('path');
 const dbPath: string = path.join(__dirname, 'database.db');
 const db = new sqlite3.Database(dbPath);
 
-// inicializar as tabelas caso n existirem
+// inicializar as tabelas caso n existam ainda 
 db.serialize(() => {
   db.run(`CREATE TABLE IF NOT EXISTS destinos (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -70,7 +70,7 @@ function getAllViagens(): Promise<any[]> {
       if (err) {
         reject(err);
       } else {
-       // p cada viagem, a gnt busca os destinos associados
+       // p cada viagem a gnt busca os destinos associados
         const viagens: any[] = [];
         let count = 0;
         
