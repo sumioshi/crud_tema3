@@ -1,116 +1,129 @@
 const express = require('express');
 const cors = require('cors');
-const { lerDatabase, salvarDatabase, proximoId } = require('./database');
+const { 
+  initializeDatabase,
+  getAllDestinos,
+  createDestino,
+  updateDestino,
+  deleteDestino,
+  getAllViagens,
+  createViagem,
+  updateViagem,
+  deleteViagem
+} = require('./database-sqlite');
 
 const app = express();
 
 app.use(cors());
 app.use(express.json());
 
-app.get('/destinos', (req, res) => {
-  const db = lerDatabase();
-  res.json(db.destinos);
+// Inicializar banco de dados
+initializeDatabase().then(() => {
+  console.log('Banco de dados inicializado');
+}).catch(err => {
+  console.error('Erro ao inicializar banco:', err);
 });
 
-app.post('/destinos', (req, res) => {
-  const db = lerDatabase();
-  const destino = {
-    id: proximoId(db.destinos),
-    nome: req.body.nome
-  };
-  
-  db.destinos.push(destino);
-  salvarDatabase(db);
-  res.json(destino);
+app.get('/destinos', async (req, res) => {
+  try {
+    const destinos = await getAllDestinos();
+    res.json(destinos);
+  } catch (error) {
+    console.error('Erro ao buscar destinos:', error);
+    res.status(500).json({ erro: 'Erro interno do servidor' });
+  }
 });
 
-app.put('/destinos/:id', (req, res) => {
-  const db = lerDatabase();
-  const id = parseInt(req.params.id);
-  
-  for(let i = 0; i < db.destinos.length; i++) {
-    if(db.destinos[i].id === id) {
-      db.destinos[i].nome = req.body.nome;
-      salvarDatabase(db);
-      res.json(db.destinos[i]);
-      return;
+app.post('/destinos', async (req, res) => {
+  try {
+    const destino = await createDestino(req.body.nome);
+    res.json(destino);
+  } catch (error) {
+    console.error('Erro ao criar destino:', error);
+    res.status(500).json({ erro: 'Erro interno do servidor' });
+  }
+});
+
+app.put('/destinos/:id', async (req, res) => {
+  try {
+    const id = parseInt(req.params.id);
+    const destino = await updateDestino(id, req.body.nome);
+    res.json(destino);
+  } catch (error) {
+    console.error('Erro ao atualizar destino:', error);
+    if (error.message === 'Destino não encontrado') {
+      res.status(404).json({ erro: error.message });
+    } else {
+      res.status(500).json({ erro: 'Erro interno do servidor' });
     }
   }
-  
-  res.status(404).json({ erro: 'Destino não encontrado' });
 });
 
-app.delete('/destinos/:id', (req, res) => {
-  const db = lerDatabase();
-  const id = parseInt(req.params.id);
-  
-  for(let i = 0; i < db.destinos.length; i++) {
-    if(db.destinos[i].id === id) {
-      db.destinos.splice(i, 1);
-      salvarDatabase(db);
-      res.json({ mensagem: 'Destino removido' });
-      return;
+app.delete('/destinos/:id', async (req, res) => {
+  try {
+    const id = parseInt(req.params.id);
+    const result = await deleteDestino(id);
+    res.json(result);
+  } catch (error) {
+    console.error('Erro ao deletar destino:', error);
+    if (error.message === 'Destino não encontrado') {
+      res.status(404).json({ erro: error.message });
+    } else {
+      res.status(500).json({ erro: 'Erro interno do servidor' });
     }
   }
-  
-  res.status(404).json({ erro: 'Destino não encontrado' });
 });
 
-app.get('/viagens', (req, res) => {
-  const db = lerDatabase();
-  res.json(db.viagens);
+app.get('/viagens', async (req, res) => {
+  try {
+    const viagens = await getAllViagens();
+    res.json(viagens);
+  } catch (error) {
+    console.error('Erro ao buscar viagens:', error);
+    res.status(500).json({ erro: 'Erro interno do servidor' });
+  }
 });
 
-app.post('/viagens', (req, res) => {
-  const db = lerDatabase();
-  const viagem = {
-    id: proximoId(db.viagens),
-    nome: req.body.nome,
-    dataSaida: req.body.dataSaida,
-    dataChegada: req.body.dataChegada,
-    valor: req.body.valor,
-    destinos: req.body.destinos || []
-  };
-  
-  db.viagens.push(viagem);
-  salvarDatabase(db);
-  res.json(viagem);
+app.post('/viagens', async (req, res) => {
+  try {
+    const { nome, dataSaida, dataChegada, valor, destinos } = req.body;
+    const viagem = await createViagem(nome, dataSaida, dataChegada, valor, destinos || []);
+    res.json(viagem);
+  } catch (error) {
+    console.error('Erro ao criar viagem:', error);
+    res.status(500).json({ erro: 'Erro interno do servidor' });
+  }
 });
 
-app.put('/viagens/:id', (req, res) => {
-  const db = lerDatabase();
-  const id = parseInt(req.params.id);
-  
-  for(let i = 0; i < db.viagens.length; i++) {
-    if(db.viagens[i].id === id) {
-      db.viagens[i].nome = req.body.nome;
-      db.viagens[i].dataSaida = req.body.dataSaida;
-      db.viagens[i].dataChegada = req.body.dataChegada;
-      db.viagens[i].valor = req.body.valor;
-      db.viagens[i].destinos = req.body.destinos || [];
-      salvarDatabase(db);
-      res.json(db.viagens[i]);
-      return;
+app.put('/viagens/:id', async (req, res) => {
+  try {
+    const id = parseInt(req.params.id);
+    const { nome, dataSaida, dataChegada, valor, destinos } = req.body;
+    const viagem = await updateViagem(id, nome, dataSaida, dataChegada, valor, destinos || []);
+    res.json(viagem);
+  } catch (error) {
+    console.error('Erro ao atualizar viagem:', error);
+    if (error.message === 'Viagem não encontrada') {
+      res.status(404).json({ erro: error.message });
+    } else {
+      res.status(500).json({ erro: 'Erro interno do servidor' });
     }
   }
-  
-  res.status(404).json({ erro: 'Viagem não encontrada' });
 });
 
-app.delete('/viagens/:id', (req, res) => {
-  const db = lerDatabase();
-  const id = parseInt(req.params.id);
-  
-  for(let i = 0; i < db.viagens.length; i++) {
-    if(db.viagens[i].id === id) {
-      db.viagens.splice(i, 1);
-      salvarDatabase(db);
-      res.json({ mensagem: 'Viagem removida' });
-      return;
+app.delete('/viagens/:id', async (req, res) => {
+  try {
+    const id = parseInt(req.params.id);
+    const result = await deleteViagem(id);
+    res.json(result);
+  } catch (error) {
+    console.error('Erro ao deletar viagem:', error);
+    if (error.message === 'Viagem não encontrada') {
+      res.status(404).json({ erro: error.message });
+    } else {
+      res.status(500).json({ erro: 'Erro interno do servidor' });
     }
   }
-  
-  res.status(404).json({ erro: 'Viagem não encontrada' });
 });
 
 app.listen(3000, () => {

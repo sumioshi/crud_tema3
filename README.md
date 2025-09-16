@@ -1,32 +1,36 @@
-# Sistema de Gerenciamento de Viagens - CRUD
+## Sistema de Gerenciamento de Viagens - CRUD
 
 Sistema completo em TypeScript para gerenciar viagens e destinos com operações CRUD.
 
 O servidor rodará na porta 3000.
 
-#### 2. Abrir o Frontend
-Abrir o arquivo `frontend/index.html` no navegador.
+#### Abrir o Frontend
+pelo live preview ou abrir direto "frontend/index.html" no navegador.
 ### Relacionamento
 - Cada viagem pode ter múltiplos destinos
 - Interface permite selecionar destinos para viagens
 
-## Endpoints da API
+## Banco de Dados SQLITE como se conectar:
 
-### Destinos
-- `GET /destinos` - Listar destinos
-- `POST /destinos` - Criar destino
-- `PUT /destinos/:id` - Atualizar destino
-- `DELETE /destinos/:id` - Excluir destino
+- Só inserir o caminho no Dbeaver:
+>C:\Users\shodi\Documents\GitHub\ENG-SOFTWARE\crud_tema3\backend\src\database.db
 
-### Viagens
-- `GET /viagens` - Listar viagens
-- `POST /viagens` - Criar viagem
-- `PUT /viagens/:id` - Atualizar viagem
-- `DELETE /viagens/:id` - Excluir viagem
+## testes:
+
+-- CREATE (Inserir)
+INSERT INTO destinos (nome) VALUES ('Rio de Janeiro');
+
+-- READ (Consultar)
+SELECT * FROM destinos;
+
+-- UPDATE (Atualizar)
+UPDATE destinos SET nome = 'Rio de Janeiro - RJ' WHERE id = 1;
+
+-- DELETE (Deletar)
+DELETE FROM destinos WHERE id = 1;
 
 ## Tecnologias Utilizadas
 
-- **Backend**: Node.js, Express, TypeScript
-- **Frontend**: HTML, CSS, TypeScript
-- **Banco de Dados**: Arquivo JSON simples
-- **CORS**: Habilitado para comunicação entre frontend e backend
+ Backend: Node.js, Express, TypeScript
+ Frontend*: HTML, CSS, TypeScript
+ Banco de Dados: Arquivo JSON simples
