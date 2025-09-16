@@ -1,5 +1,5 @@
 "use strict";
-const API_URL = 'http://localhost:3000';
+const API_URL = 'http://localhost:3001';
 let destinos = [];
 let viagens = [];
 function mostrarTab(tabName) {

@@ -2,7 +2,7 @@
 
 Sistema completo em TypeScript para gerenciar viagens e destinos com operações CRUD.
 
-O servidor rodará na porta 3000.
+O servidor rodará na porta 3001.
 
 #### Abrir o Frontend
 pelo live preview ou abrir direto "frontend/index.html" no navegador.
@@ -33,4 +33,4 @@ DELETE FROM destinos WHERE id = 1;
 
  Backend: Node.js, Express, TypeScript
  Frontend*: HTML, CSS, TypeScript
- Banco de Dados: Arquivo JSON simples
+ Banco de Dados: SQLITE

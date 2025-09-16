@@ -12,7 +12,7 @@ interface Viagem {
   destinos: number[];
 }
 
-const API_URL = 'http://localhost:3000';
+const API_URL = 'http://localhost:3001';
 
 let destinos: Destino[] = [];
 let viagens: Viagem[] = [];
