@@ -1,8 +1,11 @@
 ## Sistema de Gerenciamento de Viagens - CRUD
 
+### Aluno: Rodrigo Shodi Sumioshi - RA: 220141912
+
+
 Sistema completo em TypeScript para gerenciar viagens e destinos com operações CRUD.
 
-O servidor rodará na porta 3001.
+localhost na porta 3001.
 
 #### Abrir o Frontend
 pelo live preview ou abrir direto "frontend/index.html" no navegador.
